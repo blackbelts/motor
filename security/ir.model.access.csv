@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_setup,setup.setup,model_cover_benfeits,base.group_user,1,1,1,1
+access_setup1,setup.setup1,model_product_covers,base.group_user,1,1,1,1
+access_setup2,setup.setup2,model_motor_rating_table,base.group_user,1,1,1,1
+access_setup3,setup.setup3,model_motor_api,base.group_user,1,1,1,1
+access_setup4,setup.setup4,model_ticket_api,base.group_user,1,1,1,1
+
+
+
+
+

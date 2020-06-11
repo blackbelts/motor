@@ -1,0 +1,14 @@
+
+<odoo>
+      <menuitem id="plat_form" name="Motor "
+                  />
+     <menuitem id="setup_menu" name="Configuration"
+                  parent="plat_form" />
+
+        <menuitem id="rate_setup_menu" name="Rates" parent="setup_menu"
+                  action="setup_view" sequence="0"/>
+
+        <menuitem id="rating_menu" name="Covers Setup" parent="setup_menu"
+                  action="covers_view" sequence="1"/>
+
+</odoo>

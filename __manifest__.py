@@ -5,7 +5,7 @@
     'description': """Motor """,
     'author': "Black Belts Egypt",
     'website': "www.blackbelts-egypt.com",
-    'category': 'plat',
+    'category': 'Motor',
     'version': '0.1',
     'license': 'AGPL-3',
     # any module necessary for this one to work correctly
@@ -13,7 +13,7 @@
 
     # always loaded
     'data': [
-        # 'security/security.xml',
+        'security/security.xml',
         
         'views/setup.xml',
         'views/arope_helpdesk.xml',

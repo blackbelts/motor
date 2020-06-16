@@ -17,11 +17,12 @@ class ProductCovers(models.Model):
       product_name = fields.Char('Product Name')
       ar_product_name = fields.Char('Arabic Product Name')
       cover_ids = fields.One2many('cover.benfeits', 'product_id', string="Category Benefit")
+      motor_rating_ids = fields.One2many('motor.rating.table', 'product_id', string="Rates")
 
       # @api.multi
       def price(self):
-            self.env['motor.api'].get_covers(
-                  {'type': 'General', 'lang': 'ar'})
+            self.env['motor.api'].get_price(
+                  {'brand': 'chinese cars & east asia', 'lang': 'en','price':500000})
 
 
 class MotorRating(models.Model):
@@ -48,26 +49,101 @@ class MotorApi(models.Model):
 
       @api.model
       def get_price(self,data):
-            if data.get('product') == 'Total Loss Only':
-                  rate = self.env['motor.rating.table'].search(
-                        [('brand', '=', 'all models'), ('product_id.product_name', '=', data.get('product')),
-                         ('sum_insured_from', '<=', data.get('price')), ('sum_insure_to', '>=', data.get('price'))])
-                  price = data.get('price')*rate.rate
+            result = []
+            price = {}
+            dic = {}
+            deductible ={}
+            if data.get('lang') == 'en':
+                  for record in self.env['product.covers'].search([('motor_rating_ids.brand', 'in', [data.get('brand'),'all models']),
+                        ('motor_rating_ids.sum_insured_from', '<=', data.get('price')),('motor_rating_ids.sum_insure_to', '>=', data.get('price'))]):
+                        for rec in record.motor_rating_ids:
+                              if rec.sum_insured_from <= data.get('price') and rec.sum_insure_to >= data.get('price'):
+                                    price.update({'cover': 'Price', record.product_name: 'EGP ' + str(rec.rate*data.get('price'))})
+                                    if rec.deductible == False:
+                                          deductible_value = ''
+                                    else:
+                                          deductible_value = rec.deductible
+                                    deductible.update({'cover': 'Deductible', record.product_name: deductible_value})
+
+                  result.append(price)
+                  result.append(deductible)
+                  for cover in self.env['cover.benfeits'].search([]):
+                        res = []
+                        for rec in self.env['product.covers'].search([('motor_rating_ids.brand', 'in', [data.get('brand'),'all models']),
+                              ('motor_rating_ids.sum_insured_from', '<=', data.get('price')),('motor_rating_ids.sum_insure_to', '>=', data.get('price'))]):
+                              for record in rec.cover_ids:
+                                    if record.cover_name == cover.cover_name:
+                                          val = 'true'
+                                          res.append({rec.product_name: val})
+                        if cover.cover_name not in dic.keys():
+                              dic[cover.cover_name] = res
+                  d = {}
+                  for key, val in dic.items():
+                        for rec in val:
+                              for k,v in rec.items():
+                                    d['cover']=key
+                                    d[k]=v
+                        result.append(d)
+                        d={}
+                  print(result)
+                  return result
             else:
-                 price = {}
-                 if data.get('brand') == 'all brands':
-                        rates = self.env['motor.rating.table'].search([('brand','=',data.get('brand' )),('product_id.product_name','=',data.get('product')),
-                                                          ('sum_insured_from','<=', data.get('price')),('sum_insure_to', '>=', data.get('price'))])
-                        for rate in rates:
-                            price.update({rate.deductible: data.get('price') * rate.rate})
-                 else:
-                       rate = self.env['motor.rating.table'].search(
-                             [('brand', '=', data.get('brand')),
-                              ('product_id.product_name', '=', data.get('product')),
-                              ('sum_insured_from', '<=', data.get('price')),
-                              ('sum_insure_to', '>=', data.get('price'))])
-                       price = data.get('price') * rate.rate
-            return price
+                  for record in self.env['product.covers'].search([('motor_rating_ids.brand', 'in', [data.get('brand'),'all models']),
+                        ('motor_rating_ids.sum_insured_from', '<=', data.get('price')),('motor_rating_ids.sum_insure_to', '>=', data.get('price'))]):
+                        for rec in record.motor_rating_ids:
+                              if rec.sum_insured_from <= data.get('price') and rec.sum_insure_to >= data.get('price'):
+                                    price.update({'cover': 'السعر', record.product_name: 'EGP ' + str(rec.rate*data.get('price'))})
+                                    if rec.deductible == False:
+                                          deductible_value = ''
+                                    else:
+                                          deductible_value = rec.deductible
+                                    deductible.update({'cover': 'التحمل', record.product_name: deductible_value})
+
+                  result.append(price)
+                  result.append(deductible)
+                  for cover in self.env['cover.benfeits'].search([]):
+                        res = []
+                        for rec in self.env['product.covers'].search([('motor_rating_ids.brand', 'in', [data.get('brand'),'all models']),
+                              ('motor_rating_ids.sum_insured_from', '<=', data.get('price')),('motor_rating_ids.sum_insure_to', '>=', data.get('price'))]):
+                              for record in rec.cover_ids:
+                                    if record.ar_cover == cover.ar_cover:
+                                          val = 'true'
+                                          res.append({rec.product_name: val})
+                        if cover.ar_cover not in dic.keys():
+                              dic[cover.ar_cover] = res
+                  d = {}
+                  for key, val in dic.items():
+                        for rec in val:
+                              for k,v in rec.items():
+                                    d['cover']=key
+                                    d[k]=v
+                        result.append(d)
+                        d={}
+                  print(result)
+                  return result
+
+
+
+            # if data.get('product') == 'Total Loss Only':
+            #       rate = self.env['motor.rating.table'].search(
+            #             [('brand', '=', 'all models'), ('product_id.product_name', '=', data.get('product')),
+            #              ('sum_insured_from', '<=', data.get('price')), ('sum_insure_to', '>=', data.get('price'))])
+            #       price = data.get('price')*rate.rate
+            # else:
+            #      price = {}
+            #      if data.get('brand') == 'all brands':
+            #             rates = self.env['motor.rating.table'].search([('brand','=',data.get('brand' )),('product_id.product_name','=',data.get('product')),
+            #                                               ('sum_insured_from','<=', data.get('price')),('sum_insure_to', '>=', data.get('price'))])
+            #             for rate in rates:
+            #                 price.update({rate.deductible: data.get('price') * rate.rate})
+            #      else:
+            #            rate = self.env['motor.rating.table'].search(
+            #                  [('brand', '=', data.get('brand')),
+            #                   ('product_id.product_name', '=', data.get('product')),
+            #                   ('sum_insured_from', '<=', data.get('price')),
+            #                   ('sum_insure_to', '>=', data.get('price'))])
+            #            price = data.get('price') * rate.rate
+            # return price
 
       @api.model
       def get_covers(self,data):

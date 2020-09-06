@@ -178,9 +178,11 @@ class ticketApi(models.Model):
       @api.model
       def create_motor_ticket(self, data):
             name = 'Motor Ticket'
+            type = 'motor'
             ids = self.env['product.covers'].search([('product_name','=', data.get('product'))]).id
 
             ticket = self.env['helpdesk_lite.ticket'].create(
                   {'name': name, 'contact_name': data.get('name'), 'phone': data.get('phone'),
-                   'email_from': data.get('mail'), 'sum_insured': data.get('price'), 'brand': data.get('brand'), 'product_id': ids})
+                   'email_from': data.get('mail'), 'sum_insured': data.get('price'),
+                   'brand': data.get('brand'), 'product_id': ids ,'ticket_type':type})
             return ticket.id

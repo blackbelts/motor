@@ -162,25 +162,27 @@ class MotorApi(models.Model):
                         if cover.ar_cover != False:
                               res.append(cover.ar_cover)
                   print(res)
+
                   return res
+
+      @api.model
+      def create_motor_ticket(self, data):
+            name = 'Motor Ticket'
+            type = 'motor'
+            ids = self.env['product.covers'].search([('product_name', '=', data.get('product'))]).id
+
+            ticket = self.env['helpdesk_lite.ticket'].create(
+                  {'name': name, 'contact_name': data.get('name'), 'phone': data.get('phone'),
+                   'email_from': data.get('mail'), 'sum_insured': data.get('price'),
+                   'brand': data.get('brand'), 'product_id': ids, 'ticket_type': type})
+            return ticket.id
 
 
 class aropeHelpDesk(models.Model):
     _inherit = 'helpdesk_lite.ticket'
 
-    sum_insured = fields.Float('Sum Insured')
     brand = fields.Char('Brand')
     product_id = fields.Many2one('product.covers')
 
-class ticketApi(models.Model):
-      _inherit = 'ticket.api'
 
-      @api.model
-      def create_motor_ticket(self, data):
-            name = 'Motor Ticket'
-            ids = self.env['product.covers'].search([('product_name','=', data.get('product'))]).id
 
-            ticket = self.env['helpdesk_lite.ticket'].create(
-                  {'name': name, 'contact_name': data.get('name'), 'phone': data.get('phone'),
-                   'email_from': data.get('mail'), 'sum_insured': data.get('price'), 'brand': data.get('brand'), 'product_id': ids})
-            return ticket.id

@@ -92,12 +92,12 @@ class MotorApi(models.Model):
                         ('motor_rating_ids.sum_insured_from', '<=', data.get('price')),('motor_rating_ids.sum_insure_to', '>=', data.get('price'))]):
                         for rec in record.motor_rating_ids:
                               if rec.sum_insured_from <= data.get('price') and rec.sum_insure_to >= data.get('price'):
-                                    price.update({'cover': 'السعر', record.product_name: 'EGP ' + str(rec.rate*data.get('price'))})
+                                    price.update({'cover': 'السعر', record.ar_product_name: 'EGP ' + str(rec.rate*data.get('price'))})
                                     if rec.deductible == False:
                                           deductible_value = ''
                                     else:
                                           deductible_value = rec.deductible
-                                    deductible.update({'cover': 'التحمل', record.product_name: deductible_value})
+                                    deductible.update({'cover': 'التحمل', record.ar_product_name: deductible_value})
 
                   result.append(price)
                   result.append(deductible)
@@ -108,7 +108,7 @@ class MotorApi(models.Model):
                               for record in rec.cover_ids:
                                     if record.ar_cover == cover.ar_cover:
                                           val = 'true'
-                                          res.append({rec.product_name: val})
+                                          res.append({rec.ar_product_name: val})
                         if cover.ar_cover not in dic.keys():
                               dic[cover.ar_cover] = res
                   d = {}

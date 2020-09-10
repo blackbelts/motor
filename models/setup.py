@@ -13,7 +13,7 @@ class Covers(models.Model):
 class ProductCovers(models.Model):
       _name = 'product.covers'
       _rec_name = 'product_name'
-
+      
       product_name = fields.Char('Product Name')
       ar_product_name = fields.Char('Arabic Product Name')
       cover_ids = fields.One2many('cover.benfeits', 'product_id', string="Category Benefit")
@@ -162,27 +162,28 @@ class MotorApi(models.Model):
                         if cover.ar_cover != False:
                               res.append(cover.ar_cover)
                   print(res)
+
                   return res
-
-
-class aropeHelpDesk(models.Model):
-    _inherit = 'helpdesk_lite.ticket'
-
-    sum_insured = fields.Float('Sum Insured')
-    brand = fields.Char('Brand')
-    product_id = fields.Many2one('product.covers')
-
-class ticketApi(models.Model):
-      _inherit = 'ticket.api'
 
       @api.model
       def create_motor_ticket(self, data):
             name = 'Motor Ticket'
             type = 'motor'
-            ids = self.env['product.covers'].search([('product_name','=', data.get('product'))]).id
+            ids = self.env['product.covers'].search([('product_name', '=', data.get('product'))]).id
 
             ticket = self.env['helpdesk_lite.ticket'].create(
                   {'name': name, 'contact_name': data.get('name'), 'phone': data.get('phone'),
                    'email_from': data.get('mail'), 'sum_insured': data.get('price'),
-                   'brand': data.get('brand'), 'product_id': ids ,'ticket_type':type})
+                   'brand': data.get('brand'), 'product_id': ids, 'ticket_type': type})
             return ticket.id
+
+
+class aropeHelpDesk(models.Model):
+    _inherit = 'helpdesk_lite.ticket'
+
+    brand = fields.Char('Brand')
+    product_id = fields.Many2one('product.covers')
+
+
+
+

@@ -171,7 +171,7 @@ class MotorApi(models.Model):
             type = 'motor'
             ids = self.env['product.covers'].search([('product_name', '=', data.get('product'))]).id
 
-            ticket = self.env['helpdesk_lite.ticket'].create(
+            ticket = self.env['quoate'].create(
                   {'name': name, 'contact_name': data.get('name'), 'phone': data.get('phone'),
                    'email_from': data.get('mail'), 'sum_insured': data.get('price'),
                    'brand': data.get('brand'), 'product_id': ids, 'ticket_type': type})
@@ -179,7 +179,7 @@ class MotorApi(models.Model):
 
 
 class aropeHelpDesk(models.Model):
-    _inherit = 'helpdesk_lite.ticket'
+    _inherit = 'quoate'
 
     brand = fields.Char('Brand')
     product_id = fields.Many2one('product.covers')

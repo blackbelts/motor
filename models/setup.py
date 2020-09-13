@@ -174,7 +174,7 @@ class MotorApi(models.Model):
             ticket = self.env['quoate'].create(
                   {'name': name, 'contact_name': data.get('name'), 'phone': data.get('phone'),
                    'email_from': data.get('mail'), 'sum_insured': data.get('price'),
-                   'brand': data.get('brand'), 'product_id': ids, 'ticket_type': type})
+                   'brand': data.get('brand'), 'ticket_type': type})
             return ticket.id
 
 

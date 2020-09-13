@@ -172,7 +172,7 @@ class MotorApi(models.Model):
             ids = self.env['product.covers'].search([('product_name', '=', data.get('product'))]).id
 
             ticket = self.env['quoate'].create(
-                  {'name': name, 'contact_name': data.get('name'),'ticket_type': type})
+                  {'name': name,})
             return ticket.id
 
 

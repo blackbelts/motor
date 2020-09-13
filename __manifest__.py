@@ -16,7 +16,7 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/setup.xml',
-        'views/arope_helpdesk.xml',
+        # 'views/arope_helpdesk.xml',
         'views/menu_item.xml',
 
 

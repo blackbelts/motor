@@ -1,6 +1,10 @@
 from odoo import api, fields, models
 
+class Brands(models.Model):
+      _name='car.brands'
+      _rec_name = 'brand'
 
+      brand=fields.Char('Brand')
 
 class Covers(models.Model):
       _name = 'cover.benfeits'
@@ -177,6 +181,11 @@ class MotorApi(models.Model):
                    'brand': data.get('brand'), 'product_id': ids, 'ticket_type': type})
             return ticket.id
 
+      @api.model
+      def get_brands(self):
+            brands = []
+            for rec in self.env['car.brands'].search([]):
+                  brands.append({'id': rec.id, 'title': rec.title})
 
 class aropeHelpDesk(models.Model):
     _inherit = 'helpdesk_lite.ticket'

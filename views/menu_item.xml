@@ -10,5 +10,7 @@
 
         <menuitem id="rating_menu" name="Covers Setup" parent="setup_menu"
                   action="covers_view" sequence="1" />
+        <menuitem id="brand_menu" name="Brands" parent="setup_menu"
+                  action="brand_view" sequence="2" />
 
 </odoo>

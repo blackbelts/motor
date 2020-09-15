@@ -87,7 +87,7 @@
         <field name="name">Brands</field>
         <field name="res_model">car.brands</field>
         <field name="view_mode">tree,kanban,form,pivot</field>
-        <field name="view_type">form</field>
+<!--        <field name="view_type">form</field>-->
         <!--        <field name='domain'>['&amp;',('total_broker_commissions','>', '0'),('state','=', 'delivered')]</field>-->
     </record>
 

@@ -35,9 +35,10 @@ class MotorRating(models.Model):
       brand = fields.Selection([('all brands', 'All Brands (except Chinese & East Asia)'),
                                ('chinese cars & east asia', 'Chinese Cars & East Asia'),('all models','All Models')],
                               'Brand')
-      deductible = fields.Selection([('250 EGP', '250 EGP'),
-                                ('4 Per Thousand', '4 Per Thousand')],
-                               'Deductible')
+      deductible = fields.Char('Deductible')
+            # fields.Selection([('250 EGP', '250 EGP'),
+            #                     ('4 Per Thousand', '4 Per Thousand')],
+            #                    'Deductible')
 
       sum_insured_from = fields.Float('From Sum Insured')
       sum_insure_to = fields.Float('To Sum Insured')

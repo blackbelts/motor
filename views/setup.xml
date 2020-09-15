@@ -37,6 +37,7 @@
                             <tree editable="bottom">
                                 <field name="cover_name"/>
                                 <field name="ar_cover"/>
+                                <field name="amount"/>
                             </tree>
                         </field>
                     </page>

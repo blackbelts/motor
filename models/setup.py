@@ -12,6 +12,7 @@ class Covers(models.Model):
 
       cover_name = fields.Char('Cover')
       ar_cover = fields.Char('Arabic Cover')
+      amount = fields.Float('Amount')
       product_id = fields.Many2one('product.covers', string="product_id",ondelete='cascade')
 
 class ProductCovers(models.Model):
@@ -57,12 +58,16 @@ class MotorApi(models.Model):
             price = {}
             dic = {}
             deductible ={}
+
             if data.get('lang') == 'en':
                   for record in self.env['product.covers'].search([('motor_rating_ids.brand', 'in', [data.get('brand'),'all models']),
                         ('motor_rating_ids.sum_insured_from', '<=', data.get('price')),('motor_rating_ids.sum_insure_to', '>=', data.get('price'))]):
+                        cover_amount = 0.0
+                        for cover in record.cover_ids:
+                              cover_amount += cover.amount
                         for rec in record.motor_rating_ids:
                               if rec.sum_insured_from <= data.get('price') and rec.sum_insure_to >= data.get('price'):
-                                    price.update({'cover': 'Price', record.product_name: 'EGP ' + str(rec.rate*data.get('price'))})
+                                    price.update({'cover': 'Price', record.product_name: 'EGP ' + str((rec.rate*data.get('price'))+cover_amount)})
                                     if rec.deductible == False:
                                           deductible_value = ''
                                     else:
@@ -94,9 +99,12 @@ class MotorApi(models.Model):
             else:
                   for record in self.env['product.covers'].search([('motor_rating_ids.brand', 'in', [data.get('brand'),'all models']),
                         ('motor_rating_ids.sum_insured_from', '<=', data.get('price')),('motor_rating_ids.sum_insure_to', '>=', data.get('price'))]):
+                        cover_amount = 0.0
+                        for cover in record.cover_ids:
+                              cover_amount += cover.amount
                         for rec in record.motor_rating_ids:
                               if rec.sum_insured_from <= data.get('price') and rec.sum_insure_to >= data.get('price'):
-                                    price.update({'cover': 'السعر', record.ar_product_name: 'EGP ' + str(rec.rate*data.get('price'))})
+                                    price.update({'cover': 'السعر', record.ar_product_name: 'EGP ' + str((rec.rate*data.get('price'))+cover_amount)})
                                     if rec.deductible == False:
                                           deductible_value = ''
                                     else:

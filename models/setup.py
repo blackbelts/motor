@@ -194,7 +194,8 @@ class MotorApi(models.Model):
       def get_brands(self):
             brands = []
             for rec in self.env['car.brands'].search([]):
-                  brands.append({'id': rec.id, 'title': rec.title})
+                  brands.append({'id': rec.id, 'title': rec.brand})
+            return brands
 
 class aropeHelpDesk(models.Model):
     _inherit = 'quoate'

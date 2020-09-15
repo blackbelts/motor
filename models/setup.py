@@ -191,7 +191,7 @@ class MotorApi(models.Model):
             return ticket.id
 
       @api.model
-      def get_brands(self):
+      def get_brands(self,data):
             brands = []
             for rec in self.env['car.brands'].search([]):
                   brands.append({'id': rec.id, 'title': rec.brand})

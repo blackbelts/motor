@@ -1,16 +1,15 @@
 
 <odoo>
       <menuitem id="plat_form" name="Motor "
-                 groups="motor.manager_motor_group" />
+                 groups="motor.manager_motor_group" parent="arope-conf.conf_menu"/>
      <menuitem id="setup_menu" name="Configuration"
                   parent="plat_form"  />
 
-<!--        <menuitem id="rate_setup_menu" name="Rates" parent="setup_menu"-->
-<!--                  action="setup_view" sequence="0"/>-->
+
 
         <menuitem id="rating_menu" name="Covers Setup" parent="setup_menu"
-                  action="covers_view" sequence="1" />
+                  action="arope-conf.covers_view" sequence="1" />
         <menuitem id="brand_menu" name="Brands" parent="setup_menu"
-                  action="brand_view" sequence="2" />
+                  action="arope-conf.brand_view" sequence="2" />
 
 </odoo>

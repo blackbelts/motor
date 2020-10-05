@@ -1,5 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_setup3_motor,setup.setup3_motor,model_motor_api,base.group_user,1,1,1,1
+access_setup2_motor,setup.setup2motor,model_motor_rating_table,base.group_user,1,1,1,1
+access_setup4_motor,setup.setup3motor,model_car_brands,base.group_user,1,1,1,1
+access_setup_motor,setup.setupmotor,model_cover_benfeits,base.group_user,1,1,1,1
+access_setup1_motor,setup.setup1motor,model_product_covers,base.group_user,1,1,1,1
 
 
 

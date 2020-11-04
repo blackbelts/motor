@@ -1,7 +1,7 @@
 
 <odoo>
       <menuitem id="plat_form" name="Motor "
-                 groups="motor.manager_motor_group" parent="arope-conf.conf_menu"/>
+                 groups="motor.manager_motor_group" parent="arope_conf.conf_menu"/>
      <menuitem id="setup_menu" name="Configuration"
                   parent="plat_form"  />
 

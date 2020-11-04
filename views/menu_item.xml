@@ -8,8 +8,8 @@
 
 
         <menuitem id="rating_menu" name="Covers Setup" parent="setup_menu"
-                  action="arope-conf.covers_view" sequence="1" />
+                  action="covers_view" sequence="1" />
         <menuitem id="brand_menu" name="Brands" parent="setup_menu"
-                  action="arope-conf.brand_view" sequence="2" />
+                  action="brand_view" sequence="2" />
 
 </odoo>

@@ -9,7 +9,7 @@
     'version': '0.1',
     'license': 'AGPL-3',
     # any module necessary for this one to work correctly
-    'depends': ['base','helpdesk_inherit','arope-conf'],
+    'depends': ['base','helpdesk_inherit',],
 
     # always loaded
     'data': [
@@ -17,7 +17,7 @@
         'security/ir.model.access.csv',
         'views/motor_setup.xml',
         'views/arope_helpdesk.xml',
-        'views/menu_item.xml',
+        # 'views/menu_item.xml',
 
 
     ],

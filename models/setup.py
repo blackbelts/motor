@@ -184,7 +184,7 @@ class MotorApi(models.Model):
             support_team = self.env['helpdesk_lite.team'].search([('team_support_type', '=', 'motor')], limit=1).id
             ticket = self.env['quoate'].create(
                   {'name': name, 'contact_name': data.get('name'), 'phone': data.get('phone'),
-                   'email_from': data.get('mail'), 'sum_insured': data.get('price'),
+                   'email_from': data.get('mail'), 'sum_insured': data.get('price'), 'source': 'online',
                    'brand': data.get('brand'), 'product_id': ids, 'ticket_type': type, 'support_team': support_team})
             self.env['quoate'].search([('id', '=', ticket.id)]).onchange_support_team()
             return ticket.id

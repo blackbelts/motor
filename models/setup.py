@@ -186,6 +186,7 @@ class MotorApi(models.Model):
                   {'name': name, 'contact_name': data.get('name'), 'phone': data.get('phone'),
                    'email_from': data.get('mail'), 'sum_insured': data.get('price'),
                    'brand': data.get('brand'), 'product_id': ids, 'ticket_type': type, 'support_team': support_team})
+            self.env['quoate'].search([('id', '=', ticket.id)]).onchange_support_team()
             return ticket.id
 
       @api.model

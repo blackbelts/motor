@@ -181,11 +181,11 @@ class MotorApi(models.Model):
             name = 'Motor Ticket'
             type = 'motor'
             ids = self.env['product.covers'].search([('product_name', '=', data.get('product'))]).id
-
+            support_team = self.env['helpdesk_lite.team'].search([('team_support_type', '=', 'motor')], limit=1).id
             ticket = self.env['quoate'].create(
                   {'name': name, 'contact_name': data.get('name'), 'phone': data.get('phone'),
                    'email_from': data.get('mail'), 'sum_insured': data.get('price'),
-                   'brand': data.get('brand'), 'product_id': ids, 'ticket_type': type})
+                   'brand': data.get('brand'), 'product_id': ids, 'ticket_type': type, 'support_team': support_team})
             return ticket.id
 
       @api.model
